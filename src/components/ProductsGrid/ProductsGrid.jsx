@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid 
 } from '@material-ui/core';
-import ProductCard from './ProductCard'
+import ProductCard from '../ProductCard'
 
 const useStyles = makeStyles({
     container: {
