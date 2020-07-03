@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffects } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid 
 } from '@material-ui/core';
-import ProductCard from '../ProductCard'
+import ProductCard from '../ProductCard';
+import { fetchProducts } from '../../utils/fetch'
 
 const useStyles = makeStyles({
     container: {
@@ -20,8 +21,13 @@ const useStyles = makeStyles({
     }
   });
 
-const ProductsGrid = ({products}) => {
+const ProductsGrid = () => {
     const classes = useStyles();
+    const [products, setProducts] = useState([]);
+    useEffects(() => {
+        const fetched = fetchProducts();
+        setProducts(fetched);
+    }, []);
     return (
         <Grid
             container
@@ -32,7 +38,7 @@ const ProductsGrid = ({products}) => {
             spacing={6}
             className={classes.container}
         >
-            { products.map((product, idx) => (
+            { products.length && products.map((product, idx) => (
                 <Grid item xs={6} sm={4} key={idx} className={classes.item}>
                     <ProductCard       
                         className={classes.card}                   
