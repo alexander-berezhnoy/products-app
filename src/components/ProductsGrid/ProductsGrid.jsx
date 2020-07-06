@@ -1,4 +1,4 @@
-import React, { useState, useEffects } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Grid 
@@ -24,9 +24,17 @@ const useStyles = makeStyles({
 const ProductsGrid = () => {
     const classes = useStyles();
     const [products, setProducts] = useState([]);
-    useEffects(() => {
-        const fetched = fetchProducts();
-        setProducts(fetched);
+    useEffect(() => {
+        const fetchData = async() => {
+            const fetchedProducts = await fetchProducts()
+            console.log(fetchedProducts);
+            setProducts(fetchedProducts);
+        }
+       try {
+            fetchData();
+       } catch (err) {
+            console.log(err);
+       }
     }, []);
     return (
         <Grid
@@ -38,7 +46,7 @@ const ProductsGrid = () => {
             spacing={6}
             className={classes.container}
         >
-            { products.length && products.map((product, idx) => (
+            { products && products.map((product, idx) => (
                 <Grid item xs={6} sm={4} key={idx} className={classes.item}>
                     <ProductCard       
                         className={classes.card}                   
