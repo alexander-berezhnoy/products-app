@@ -1,11 +1,15 @@
 import axios from 'axios';
 
+const fetch = axios.create({
+    baseURL: 'http://localhost:4000/api'
+});
+
 export const fetchProducts = async() => {
-    const url = 'http://localhost:4000/products';
+    const url = '/products';
     try {
-        const res = await axios(url);
+        const res = await fetch.get(url);
         return res.data;
     } catch(err) {
-        console.log(err)
+        console.error(err);
     }
 }

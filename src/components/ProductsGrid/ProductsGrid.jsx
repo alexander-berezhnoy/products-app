@@ -1,55 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { 
-    Grid 
-} from '@material-ui/core';
+import React, { useState, useEffect, useCallback } from 'react';
+import Grid from '@material-ui/core/Grid';
+import './styles.scss';
 import ProductCard from '../ProductCard';
 import { fetchProducts } from '../../utils/fetch'
 
-const useStyles = makeStyles({
-    container: {
-        width: '100%',
-        margin: '32px 0',
-        flexGrow: 1,
-      },
-    item: {
-        height: '200px',
-        margin: '16px 0'
-    },
-    card: {
-        width: '100%',
-    }
-  });
-
 const ProductsGrid = () => {
-    const classes = useStyles();
     const [products, setProducts] = useState([]);
+
+    const fetchData = useCallback( async() => {
+      try {
+        const fetchedProducts = await fetchProducts()
+        console.log(fetchedProducts);
+        setProducts(fetchedProducts);
+      } catch (err) {
+        console.error(err)
+      }
+    }, [fetchProducts]);
+
     useEffect(() => {
-        const fetchData = async() => {
-            const fetchedProducts = await fetchProducts()
-            console.log(fetchedProducts);
-            setProducts(fetchedProducts);
-        }
-       try {
-            fetchData();
-       } catch (err) {
-            console.log(err);
-       }
+      fetchData();
     }, []);
+
     return (
         <Grid
             container
             direction="row"
-            justify='flex-start'
-            alignItems="'space-between'"
-            xs={12}
+            justify="flex-start"
+            alignItems="space-between"
             spacing={6}
-            className={classes.container}
+            className="container"
         >
             { products && products.map((product, idx) => (
-                <Grid item xs={6} sm={4} key={idx} className={classes.item}>
+                <Grid item xs={6} sm={4} key={idx} className="item">
                     <ProductCard       
-                        className={classes.card}                   
+                        className="card"
                         name={product.name} 
                         picture={product.picture} 
                         price={product.price}
