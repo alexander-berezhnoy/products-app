@@ -41,23 +41,23 @@ const ProductForm = ({ product, handleRequest }) => {
 
   return(
     <form onSubmit={formik.handleSubmit} className="form">
-      <label htmlFor="name">Name</label>
-      <input name="name" type="text" {...formik.getFieldProps('name')} />
+      <label htmlFor="name" className="label">Name</label>
+      <input name="name" className="field" {...formik.getFieldProps('name')} />
       { formik.touched.name && formik.errors.name ? <div className="error">{formik.errors.name}</div> : null}
 
-      <label htmlFor="picture">Picture</label>
-      <input name="picture" type="text" {...formik.getFieldProps('picture')} />
+      <label htmlFor="picture" className="label">Picture</label>
+      <input name="picture" className="field" {...formik.getFieldProps('picture')} />
       { formik.touched.picture && formik.errors.picture ? <div className="error">{formik.errors.picture}</div> : null}
 
-      <label htmlFor="description">Description</label>
-      <textarea name="description" {...formik.getFieldProps('description')} rows="5" cols="33" />
+      <label htmlFor="description" className="label">Description</label>
+      <textarea name="description" className="field" {...formik.getFieldProps('description')} rows="5" cols="33" />
       { formik.touched.description && formik.errors.description ? <div className="error">{formik.errors.description}</div> : null}
 
-      <label htmlFor="price">Price</label>
-      <input name="price" type="number" min="0" step="0.01" className="number" {...formik.getFieldProps('price')} />
+      <label htmlFor="price" className="label">Price</label>
+      <input name="price" type="number" min="0" step="0.01" className="field" {...formik.getFieldProps('price')} />
       { formik.touched.price && formik.errors.price ? <div className="error">{formik.errors.price}</div> : null}
 
-      <input type="submit" value="Submit" />
+      <input type="submit" className="button" value="Submit" />
     </form>
   )
 }
