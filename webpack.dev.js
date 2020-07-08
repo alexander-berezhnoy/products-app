@@ -5,16 +5,23 @@ const port = process.env.PORT || 3000;
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "/dist")
+  entry: {
+    js: ['@babel/polyfill', './src/index.js'],
+    vendor: ['react'],
   },
+  output: {
+  path: path.join(__dirname, '/dist'),
+    filename: '[name].js',
+    publicPath: '/',
+},
   plugins: [
     new HtmlWebpackPlugin({
-      template: "index.html"
+      template: "./index.html"
     })
   ],
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
+  },
   module: {
     rules: [
       {
