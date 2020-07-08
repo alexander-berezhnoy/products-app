@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Grid from '@material-ui/core/Grid';
-import './styles.scss';
+import './style.scss';
 import ProductCard from '../ProductCard';
 import { fetchProducts } from '../../utils/fetch'
 

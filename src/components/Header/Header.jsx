@@ -1,7 +1,7 @@
 import React from 'react'
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import './styles.scss'
+import './style.scss'
 
 const Header = () =>  (
     <Container className="container">
