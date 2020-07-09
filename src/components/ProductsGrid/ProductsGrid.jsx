@@ -9,8 +9,7 @@ const ProductsGrid = () => {
 
     const fetchData = useCallback( async() => {
       try {
-        const fetchedProducts = await fetchProducts()
-        console.log(fetchedProducts);
+        const fetchedProducts = await fetchProducts();
         setProducts(fetchedProducts);
       } catch (err) {
         console.error(err)

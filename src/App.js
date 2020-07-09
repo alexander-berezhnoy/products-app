@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import MainPage from './pages/MainPage';
 import CreatePage from './pages/CreatePage';
@@ -9,19 +9,11 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <MainPage />
-        </Route>
-        <Route path="/create">
-          <CreatePage />
-        </Route>
-        <Route path="/:id/edit">
-          <EditPage />
-        </Route>
+        <Route exact path="/" component={MainPage} />
+        <Route path="/create" component={CreatePage} />
+        <Route path="/:id/edit" component={EditPage} />
       </Switch>
-    </BrowserRouter>
   )
 }
 

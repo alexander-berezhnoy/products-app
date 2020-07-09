@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Formik, Form, useField } from 'formik';
 import './style.scss';
+
+import { createProduct, updateProduct } from '../../utils/fetch'
 
 const validate = values => {
   const errors = {};
@@ -50,21 +53,40 @@ const TextArea = ({label, ...props }) => {
   )
 };
 
-const ProductForm = ({ product, handleRequest }) => {
+const ProductForm = ({ product, action, match, history }) => {
+
+  const submitRequest = useCallback( async (submitted) => {
+    try {
+      let result;
+      if (action === 'create'){
+        result = await createProduct(submitted);
+      }
+      if (action === 'update'){
+        const  { id } = match.params;
+        result = await updateProduct(id, submitted);
+      }
+      if (result?.data?.message) {
+        history.push("/");
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }, [createProduct, updateProduct ]);
+
   return (
     <Formik
-      initialValues={{
-        name: product.name,
-        picture: product.picture,
-        description: product.description,
-        price: product.price
-      }}
+      initialValues={{...product}}
       validate={validate}
       onSubmit={(values, {setSubmitting}) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          handleRequest();
+          const submitted = {
+            name: values.name,
+            picture: values.picture,
+            description: values.description,
+            price: Number(values.price)
+          }
           setSubmitting(false);
+          submitRequest(submitted);
         }, 400);
       }}
     >
@@ -106,7 +128,9 @@ const ProductForm = ({ product, handleRequest }) => {
 
 ProductForm.propTypes = {
   product: PropTypes.object,
-  handleRequest: PropTypes.func.isRequired
+  match: PropTypes.object,
+  history: PropTypes.object,
+  action: PropTypes.string.isRequired
 }
 
 ProductForm.defaultProps = {
@@ -118,4 +142,4 @@ ProductForm.defaultProps = {
   }
 }
 
-export default ProductForm;
+export default withRouter(ProductForm);
