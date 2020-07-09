@@ -25,7 +25,6 @@ const ProductsGrid = () => {
             container
             direction="row"
             justify="flex-start"
-            alignItems="center"
             spacing={6}
             className="container"
         >
