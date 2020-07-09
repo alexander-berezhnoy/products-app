@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 module.exports = {
   mode: "development",
   entry: {
-    js: ['@babel/polyfill', './src/index.js'],
+    main: ['@babel/polyfill', './src/index.js'],
     vendor: ['react'],
   },
   output: {

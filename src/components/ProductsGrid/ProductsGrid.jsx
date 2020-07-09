@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Grid from '@material-ui/core/Grid';
-import './styles.scss';
+import './style.scss';
 import ProductCard from '../ProductCard';
 import { fetchProducts } from '../../utils/fetch'
 
@@ -9,8 +9,7 @@ const ProductsGrid = () => {
 
     const fetchData = useCallback( async() => {
       try {
-        const fetchedProducts = await fetchProducts()
-        console.log(fetchedProducts);
+        const fetchedProducts = await fetchProducts();
         setProducts(fetchedProducts);
       } catch (err) {
         console.error(err)
@@ -26,7 +25,6 @@ const ProductsGrid = () => {
             container
             direction="row"
             justify="flex-start"
-            alignItems="space-between"
             spacing={6}
             className="container"
         >
@@ -37,6 +35,7 @@ const ProductsGrid = () => {
                         name={product.name} 
                         picture={product.picture} 
                         price={product.price}
+                        id={product._id}
                     />
                 </Grid>                
                 ))
