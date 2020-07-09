@@ -10,33 +10,30 @@ import Typography from '@material-ui/core/Typography';
 import './style.scss';
 
 const ProductCard = ({ name, picture, price, id }) => (
-  <Card>
+    <Card>
       <CardActionArea>
-          <CardMedia
+        <CardMedia
           className="media"
           image={picture}
           title={name}
-          />
-          <CardContent>
+        />
+        <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
           </Typography>
           <Typography gutterBottom variant="h6" component="h4">
             ${price}
           </Typography>
-          </CardContent>
+        </CardContent>
       </CardActionArea>
       <CardActions>
-        <Link to={`/${id}/edit`}>
+        <Link to={`/products/${id}`} className="link">
           <Button size="small" color="primary">
-            Edit
+            More
           </Button>
         </Link>
-        <Button size="small" color="primary">
-          Delete
-        </Button>
       </CardActions>
-  </Card>
+    </Card>
 );
 
 export default ProductCard

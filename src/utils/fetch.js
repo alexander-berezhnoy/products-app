@@ -27,8 +27,7 @@ export const getProduct = async (id) => {
 export const createProduct = async(product) => {
     const url = '/products';
     try {
-        const res = await fetch.post(url, product);
-        return res;
+        return await fetch.post(url, product);
     } catch(err) {
         console.error(err);
     }
@@ -37,8 +36,16 @@ export const createProduct = async(product) => {
 export const updateProduct = async(id, product) => {
     const url = `/products/${id}`;
     try {
-        const res = await fetch.put(url, product);
-        return res;
+        return await fetch.put(url, product);
+    } catch(err) {
+        console.error(err);
+    }
+}
+
+export const deleteProduct = async(id) => {
+    const url = `/products/${id}`;
+    try {
+        return await fetch.delete(url);
     } catch(err) {
         console.error(err);
     }

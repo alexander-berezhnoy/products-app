@@ -9,7 +9,7 @@ import './style.scss';
 const MainPage = () => (
   <Container maxWidth="lg" className="flex">
     <Header />
-    <Link to="/create" className="btn-create">
+    <Link to="/products/create" className="btn-create">
       <Button variant="contained" color="primary" size="large">
         Create New Product
       </Button>

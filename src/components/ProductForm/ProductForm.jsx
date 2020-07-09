@@ -60,13 +60,18 @@ const ProductForm = ({ product, action, match, history }) => {
       let result;
       if (action === 'create'){
         result = await createProduct(submitted);
-      }
+      } else
       if (action === 'update'){
         const  { id } = match.params;
         result = await updateProduct(id, submitted);
+      } else {
+        throw Error("Unknown action was given as prop");
       }
+
       if (result?.data?.message) {
-        history.push("/");
+        history.push("/products");
+      } else {
+          throw Error("Response from server is incorrect");
       }
     } catch (err) {
       console.error(err)
