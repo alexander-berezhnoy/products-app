@@ -1,0 +1,22 @@
+.container {
+  margin: 32px auto;
+
+  .media {
+    height: 400px;
+    width: 70%;
+    margin: 0 auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .title-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+  }
+
+  .link {
+    text-decoration: none;
+  }
+}
