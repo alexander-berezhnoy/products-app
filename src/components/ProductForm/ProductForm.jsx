@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Formik, Form, useField } from 'formik';
-import './style.scss';
+import { Formik, Form } from 'formik';
+import Input from '../Input';
+import TextArea from '../TextArea'
+import { createProduct, updateProduct } from '../../utils/fetch';
 
-import { createProduct, updateProduct } from '../../utils/fetch'
+import './style.scss';
 
 const validate = values => {
   const errors = {};
@@ -27,33 +28,9 @@ const validate = values => {
   return errors;
 };
 
-const Input = ({label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <label htmlFor={props.id || props.name } className="label">{label}</label>
-      <input className="field" {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  )
-};
-
-const TextArea = ({label, ...props }) => {
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <label htmlFor={props.id || props.name } className="label">{label}</label>
-      <textarea className="field" {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  )
-};
-
 const ProductForm = ({ product, action, match, history }) => {
+
+  let fetchedErrors = {}
 
   const submitRequest = useCallback( async (submitted) => {
     try {
@@ -70,8 +47,9 @@ const ProductForm = ({ product, action, match, history }) => {
 
       if (result?.data?.message) {
         history.push("/products");
-      } else {
-          throw Error("Response from server is incorrect");
+      }
+      else {
+        fetchedErrors = {...result};
       }
     } catch (err) {
       console.error(err)
@@ -82,7 +60,7 @@ const ProductForm = ({ product, action, match, history }) => {
     <Formik
       initialValues={{...product}}
       validate={validate}
-      onSubmit={(values, {setSubmitting}) => {
+      onSubmit={(values, {setSubmitting, setErrors}) => {
         setTimeout(() => {
           const submitted = {
             name: values.name,
@@ -92,6 +70,10 @@ const ProductForm = ({ product, action, match, history }) => {
           }
           setSubmitting(false);
           submitRequest(submitted);
+          if (fetchedErrors) {
+            console.log(fetchedErrors)
+            setErrors(fetchedErrors);
+          }
         }, 400);
       }}
     >
@@ -147,4 +129,4 @@ ProductForm.defaultProps = {
   }
 }
 
-export default withRouter(ProductForm);
+export default ProductForm;

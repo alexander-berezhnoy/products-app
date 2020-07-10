@@ -29,7 +29,20 @@ export const createProduct = async(product) => {
     try {
         return await fetch.post(url, product);
     } catch(err) {
-        console.error(err);
+        const {status, data} = err.response;
+        if (
+          status === 400
+          && Array.isArray(data.errors)
+          && data.errors.length
+        ) {
+            const fetchedErrors = {}
+            data.errors.forEach(error => {
+                fetchedErrors[error.field] = error.error;
+            })
+            return fetchedErrors;
+        } else {
+            console.error(err);
+        }
     }
 }
 

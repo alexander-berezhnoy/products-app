@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import {Link, withRouter } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -75,4 +75,4 @@ const ProductPage = ({ match, history}) => {
   )
 }
 
-export default withRouter(ProductPage);
+export default ProductPage;
