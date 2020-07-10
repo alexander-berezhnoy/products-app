@@ -34,6 +34,10 @@
     background: #d2d9dd;
   }
 
+  .field-error {
+    border: 2px solid red;
+  }
+
   textarea {
     resize:none;
   }
