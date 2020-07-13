@@ -30,8 +30,6 @@ const validate = values => {
 
 const ProductForm = ({ product, action, match, history }) => {
 
-  let fetchedErrors = {}
-
   const submitRequest = useCallback( async (submitted) => {
     try {
       let result;
@@ -49,7 +47,7 @@ const ProductForm = ({ product, action, match, history }) => {
         history.push("/products");
       }
       else {
-        fetchedErrors = {...result};
+        return {...result};
       }
     } catch (err) {
       console.error(err)
@@ -68,12 +66,13 @@ const ProductForm = ({ product, action, match, history }) => {
             description: values.description,
             price: Number(values.price)
           }
-          setSubmitting(false);
-          submitRequest(submitted);
-          if (fetchedErrors) {
-            console.log(fetchedErrors)
-            setErrors(fetchedErrors);
-          }
+          setSubmitting(false)
+          submitRequest(submitted).then(errors => {
+            if (errors) {
+              console.log(errors)
+              setErrors(errors);
+            }
+          })
         }, 400);
       }}
     >
