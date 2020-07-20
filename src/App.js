@@ -1,17 +1,23 @@
 import React from 'react';
-import './App.css';
+import { Switch, Route } from 'react-router-dom';
 
-import Header from './components/Header'
-import ProductsGrid from './components/ProductsGrid'
-import { productsData } from './productsData'
+import MainPage from './pages/MainPage';
+import CreatePage from './pages/CreatePage';
+import EditPage from './pages/EditPage';
+import ProductPage from './pages/ProductPage';
+
+import './App.css';
 
 function App() {
   return (
-    <React.Fragment>
-      <Header/>
-      <ProductsGrid products={productsData} />
-    </React.Fragment>    
-  );
+      <Switch>
+        <Route exact path="/" component={MainPage} />
+        <Route exact path="/products" component={MainPage} />
+        <Route path="/products/create" component={CreatePage} />
+        <Route exact path="/products/:id" component={ProductPage} />
+        <Route path="/products/:id/edit" component={EditPage} />
+      </Switch>
+  )
 }
 
 export default App;
