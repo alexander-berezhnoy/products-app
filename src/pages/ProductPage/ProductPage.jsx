@@ -10,8 +10,9 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import Container from '@material-ui/core/Container';
 
-import { deleteProduct } from '../../utils/fetch';
+import { api } from '../../utils/api';
 import { useProduct } from '../../utils/hooks';
+import { PRODUCTS_ROUTE } from '../../routes';
 
 import './style.scss';
 
@@ -21,7 +22,7 @@ const ProductPage = ({ match, history}) => {
 
   const handleDelete = useCallback(async() => {
     try {
-      const result = await deleteProduct(id);
+      const result = await api.deleteProduct(id);
       if (result?.data?.message) {
         history.push('/products');
       } else {
@@ -56,12 +57,12 @@ const ProductPage = ({ match, history}) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Link to="/products" className="link">
+          <Link to={PRODUCTS_ROUTE} className="link">
             <Button size="small" color="primary">
               {'< Back'}
             </Button>
           </Link>
-          <Link to={`/products/${id}/edit`} className="link">
+          <Link to={`${PRODUCTS_ROUTE}/${id}/edit`} className="link">
             <Button size="small" color="primary">
               Edit
             </Button>

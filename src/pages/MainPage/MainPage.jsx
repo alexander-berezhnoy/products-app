@@ -4,12 +4,13 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Header from '../../components/Header';
 import ProductsGrid from '../../components/ProductsGrid';
+import { CREATE_PRODUCT_ROUTE } from '../../routes';
 import './style.scss';
 
 const MainPage = () => (
   <Container maxWidth="lg" className="flex">
     <Header />
-    <Link to="/products/create" className="btn-create">
+    <Link to={CREATE_PRODUCT_ROUTE} className="btn-create">
       <Button variant="contained" color="primary" size="large">
         Create New Product
       </Button>

@@ -2,19 +2,19 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Grid from '@material-ui/core/Grid';
 import './style.scss';
 import ProductCard from '../ProductCard';
-import { fetchProducts } from '../../utils/fetch'
+import { api } from '../../utils/api';
 
 const ProductsGrid = () => {
     const [products, setProducts] = useState([]);
 
     const fetchData = useCallback( async() => {
       try {
-        const fetchedProducts = await fetchProducts();
+        const fetchedProducts = await api.fetchProducts();
         setProducts(fetchedProducts);
       } catch (err) {
         console.error(err)
       }
-    }, [fetchProducts]);
+    }, []);
 
     useEffect(() => {
       fetchData();

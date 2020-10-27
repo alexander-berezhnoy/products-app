@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getProduct } from './fetch';
+import { api } from './api';
 
 export const useProduct = productId => {
     const initialProductState = {
@@ -10,12 +10,12 @@ export const useProduct = productId => {
 
     const fetchProduct = useCallback( async() => {
         try {
-            const fetchedProduct = await getProduct(productId);
+            const fetchedProduct = await api.getProduct(productId);
             setProduct(fetchedProduct);
         } catch (err) {
             console.error(err)
         }
-    }, [getProduct]);
+    }, []);
 
     useEffect(() => {
         fetchProduct();

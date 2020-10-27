@@ -3,78 +3,38 @@ import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import Input from '../Input';
 import TextArea from '../TextArea'
-import { createProduct, updateProduct } from '../../utils/fetch';
+import { submitRequest } from '../../utils/submit';
 
 import './style.scss';
 
 const validate = values => {
   const errors = {};
-  if (!values.name) {
-    errors.name = 'Required';
-  }
-
-  if (!values.picture) {
-    errors.picture = 'Required';
-  }
-
-  if (!values.description) {
-    errors.description = 'Required';
-  }
-
-  if (!values.price) {
-    errors.price = 'Required';
-  }
-
+  [name, picture, description, price].forEach(
+    field => {
+      if (!values[field]) errors[field] = 'Required';
+    }
+  );
   return errors;
 };
 
-const ProductForm = ({ product, action, match, history }) => {
+const ProductForm = ({ product, match, history }) => {
 
-  const submitRequest = useCallback( async (submitted) => {
-    try {
-      let result;
-      if (action === 'create'){
-        result = await createProduct(submitted);
-      } else
-      if (action === 'update'){
-        const  { id } = match.params;
-        result = await updateProduct(id, submitted);
-      } else {
-        throw Error("Unknown action was given as prop");
-      }
-
-      if (result?.data?.message) {
-        history.push("/products");
-      }
-      else {
-        return {...result};
-      }
-    } catch (err) {
-      console.error(err)
+  const handleSubmit = useCallback(async (values, { setErrors }) => {
+    const errors = await submitRequest(
+      { ...values, price: Number(values.price) }, 
+      { match, history }
+    );
+    if (errors) {
+      console.log(errors)
+      setErrors(errors);
     }
-  }, [createProduct, updateProduct ]);
+  });
 
   return (
     <Formik
       initialValues={{...product}}
       validate={validate}
-      onSubmit={(values, {setSubmitting, setErrors}) => {
-        setTimeout(() => {
-          const submitted = {
-            name: values.name,
-            picture: values.picture,
-            description: values.description,
-            price: Number(values.price)
-          }
-          setSubmitting(false)
-          submitRequest(submitted).then(errors => {
-            if (errors) {
-              console.log(errors)
-              setErrors(errors);
-            }
-          })
-        }, 400);
-      }}
+      onSubmit={handleSubmit}
     >
       <Form className="form">
         <Input
@@ -106,7 +66,7 @@ const ProductForm = ({ product, action, match, history }) => {
           step="0.01"
         />
 
-        <input type="submit" className="button" value="Submit" />
+        <button className="button" value="Submit" />
       </Form>
     </Formik>
   );
